@@ -9,7 +9,7 @@ class IdeaController extends Controller
 {
     public function store()
     {
-        $idea = Idea::create([
+        Idea::create([
             "content" => request()->get('idea', ''),
         ]);
 
