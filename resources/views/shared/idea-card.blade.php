@@ -9,6 +9,13 @@
                         </a></h5>
                 </div>
             </div>
+            <div class="align-self-start">
+                <form method="POST" action="{{route('ideas.destroy', $idea->id)}}">
+                    @csrf
+                    @method('delete')
+                    <button class="btn btn-danger btn-sm">X</button>
+                </form>
+            </div>
         </div>
     </div>
 
