@@ -15,8 +15,22 @@ class DashboardController extends Controller
         // ]);
         // $idea->save();
 
+        $ideas = Idea::orderBy('created_at', 'desc');
+
+
+        /*
+        *Return all customers from a city that contains the letter 'L':
+        *
+        *SELECT * FROM Customers
+        *WHERE city LIKE '%L%';
+        */
+        if (request()->has('search')) {
+            $ideas = $ideas->where('content', 'like', '%' . request()->get('search', '') . '%');
+            //request()->get('search', '') means that, if not having 'search', using '' as default
+        }
+
         return view('dashboard', [
-            'ideas' => Idea::orderBy('created_at', 'desc')->paginate(4)
+            'ideas' => $ideas->paginate(4)->withQueryString()
         ]);
     }
 }
