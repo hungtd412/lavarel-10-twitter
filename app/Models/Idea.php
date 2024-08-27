@@ -9,6 +9,14 @@ class Idea extends Model
 {
     use HasFactory;
 
+
+    // protected $guarded = [
+    //     'id',
+    //     'created_at',
+    //     'updated_at'
+    // ];
+
+    //define properties that could be assigned
     protected $fillable = [
         'content',
         'likes'
