@@ -3,19 +3,24 @@
         <div class="d-flex align-items-center justify-content-between">
             <div class="d-flex align-items-center">
                 <img style="width:50px" class="me-2 avatar-sm rounded-circle"
-                    src="https://api.dicebear.com/6.x/fun-emoji/svg?seed=Mario" alt="Mario Avatar">
+                    src="https://api.dicebear.com/6.x/fun-emoji/svg?seed={{ $idea->user->name }}"
+                    alt="{{ $idea->user->name }} Avatar">
                 <div>
-                    <h5 class="card-title mb-0"><a href="#"> Mario
+                    <h5 class="card-title mb-0"><a href="#"> {{ $idea->user->name }}
                         </a></h5>
                 </div>
             </div>
             <div class="align-self-start">
                 <form method="POST" action="{{route('ideas.destroy', $idea->id)}}">
                     @csrf
+                    @can('canUpdate', $idea)
                     <a class="mx-2" href="{{route('ideas.edit', $idea->id)}}">Edit</a>
+                    @endcan
                     <a href="{{route('ideas.show', $idea->id)}}">View</a>
                     @method('delete')
+                    @can('delete', $idea)
                     <button class="ms-1 btn btn-danger btn-sm">X</button>
+                    @endcan
                 </form>
             </div>
         </div>

@@ -18,6 +18,7 @@ class Idea extends Model
 
     //define properties that could be assigned
     protected $fillable = [
+        'user_id',
         'content',
         'likes'
     ];
@@ -25,5 +26,10 @@ class Idea extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
