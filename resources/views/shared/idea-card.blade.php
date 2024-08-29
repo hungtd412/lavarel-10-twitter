@@ -13,14 +13,10 @@
             <div class="align-self-start">
                 <form method="POST" action="{{route('ideas.destroy', $idea->id)}}">
                     @csrf
-                    @can('canUpdate', $idea)
                     <a class="mx-2" href="{{route('ideas.edit', $idea->id)}}">Edit</a>
-                    @endcan
                     <a href="{{route('ideas.show', $idea->id)}}">View</a>
                     @method('delete')
-                    @can('delete', $idea)
                     <button class="ms-1 btn btn-danger btn-sm">X</button>
-                    @endcan
                 </form>
             </div>
         </div>
