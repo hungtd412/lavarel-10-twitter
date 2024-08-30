@@ -9,9 +9,17 @@ use Illuminate\Support\Facades\Auth;
 
 class IdeaController extends Controller
 {
+    public function canEdit(Idea $idea)
+    {
+        return Auth::user()->id == $idea->user_id;
+    }
+
     public function show(Idea $idea)
     {
-        return view("ideas.show", compact("idea"));
+        $editable = $this->canEdit($idea);
+        return view("ideas.show", compact("idea", 'editable'));
+        //compact('idea'): lavarel will find variable named idea and return an copy object os that for us
+        //instead of return view("ideas.show", 'idea' => $idea);
     }
 
     public function store()
@@ -58,10 +66,6 @@ class IdeaController extends Controller
         return view('ideas.show', compact('idea', 'editing'));
     }
 
-    public function canUpdate(Idea $idea)
-    {
-        return Auth::user()->id == $idea->user_id;
-    }
     public function update(Idea $idea)
     {
         if (Auth::user()->id !== $idea->user_id) {

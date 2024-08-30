@@ -13,10 +13,16 @@
             <div class="align-self-start">
                 <form method="POST" action="{{route('ideas.destroy', $idea->id)}}">
                     @csrf
+                    @if ($editable ?? false or $idea->canEdit ?? false)
                     <a class="mx-2" href="{{route('ideas.edit', $idea->id)}}">Edit</a>
+                    @endif
+
                     <a href="{{route('ideas.show', $idea->id)}}">View</a>
+
+                    @if ($editing ?? false)
                     @method('delete')
                     <button class="ms-1 btn btn-danger btn-sm">X</button>
+                    @endif
                 </form>
             </div>
         </div>
