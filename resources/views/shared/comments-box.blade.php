@@ -13,8 +13,8 @@
     {{-- only write $idea->comments not $idea->comments() --}}
     @foreach ($idea->comments as $comment)
     <div class="d-flex align-items-start">
-        <img style="width:35px" class="me-2 avatar-sm rounded-circle"
-            src="https://api.dicebear.com/6.x/fun-emoji/svg?seed=Luigi" alt="{{ $comment->user->name }} Avatar">
+        <img style="width:35px" class="me-2 avatar-sm rounded-circle" src="{{ $comment->user->getImageURL() }}"
+            alt="{{ $comment->user->name }} Avatar">
         <div class="w-100">
             <div class="d-flex justify-content-between">
                 <h6 class="">{{ $comment->user->name }}
