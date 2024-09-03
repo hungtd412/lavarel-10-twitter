@@ -6,14 +6,17 @@
                     src="https://api.dicebear.com/6.x/fun-emoji/svg?seed={{ $idea->user->name }}"
                     alt="{{ $idea->user->name }} Avatar">
                 <div>
-                    <h5 class="card-title mb-0"><a href="#"> {{ $idea->user->name }}
-                        </a></h5>
+                    <h5 class="card-title mb-0">
+                        <a href="{{route('users.show', $idea->user->id)}}"> {{ $idea->user->name
+                            }} </a>
+                    </h5>
                 </div>
             </div>
             <div class="align-self-start">
                 <form method="POST" action="{{route('ideas.destroy', $idea->id)}}">
                     @csrf
-                    @if ($editable ?? false or $idea->canEdit ?? false)
+                    {{-- @if ($editable ?? false or $idea->canEdit ?? false) --}}
+                    @if (Auth::id() === $idea->user->id)
                     <a class="mx-2" href="{{route('ideas.edit', $idea->id)}}">Edit</a>
                     @endif
 
