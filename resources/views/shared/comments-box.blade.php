@@ -9,9 +9,9 @@
         </div>
     </form>
 
-    <hr>
     {{-- only write $idea->comments not $idea->comments() --}}
-    @foreach ($idea->comments as $comment)
+    <hr>
+    @forelse ($idea->comments as $comment)
     <div class="d-flex align-items-start">
         <img style="width:35px" class="me-2 avatar-sm rounded-circle" src="{{ $comment->user->getImageURL() }}"
             alt="{{ $comment->user->name }} Avatar">
@@ -26,5 +26,7 @@
             </p>
         </div>
     </div>
-    @endforeach
+    @empty
+    <p class="text-center mt-4">No Comments found!</p>
+    @endforelse
 </div>
