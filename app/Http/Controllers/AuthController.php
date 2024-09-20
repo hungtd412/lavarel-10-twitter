@@ -28,7 +28,7 @@ class AuthController extends Controller
         $user = User::create([
             "name" => $validated["name"],
             "email" => $validated["email"],
-            "password" => Hash::make($validated["password"])
+            "password" => $validated["password"]
         ]);
 
         Mail::to($user->email)->send(new WelcomeEmail($user));

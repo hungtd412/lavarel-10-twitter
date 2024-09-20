@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Idea;
 use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -26,7 +27,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        // $editing = true;
+        Gate::authorize("update", $user);
+
         $ideas = $user->ideas()->paginate(4);
         return view("users.edit", compact("user", "ideas"));
     }
@@ -36,6 +38,7 @@ class UserController extends Controller
      */
     public function update(User $user)
     {
+        Gate::authorize("edit", $user);
         $validated = request()->validate([
             'name' => 'required|min:3|max:40',
             'bio' => 'nullable|min:1|max:255',

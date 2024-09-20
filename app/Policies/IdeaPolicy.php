@@ -13,7 +13,7 @@ class IdeaPolicy
      */
     public function update(User $user, Idea $idea): bool
     {
-        return $user->id === $idea->user_id || (bool) $user->is_admin;
+        return $user->is($idea->user) || (bool) $user->is_admin;
     }
 
     /**
@@ -21,6 +21,6 @@ class IdeaPolicy
      */
     public function delete(User $user, Idea $idea): bool
     {
-        return $user->id === $idea->user_id || (bool) $user->is_admin;
+        return $user->is($idea->user) || (bool) $user->is_admin;
     }
 }
