@@ -1,4 +1,10 @@
-@extends('layout.layout')
+@extends('layout.app')
+
+@if (Route::is('dashboard'))
+@section('title', 'Dashboard')
+@elseif (Route::is('feed'))
+@section('title', 'Feed')
+@endif
 
 @section('content')
 <div class="row">
