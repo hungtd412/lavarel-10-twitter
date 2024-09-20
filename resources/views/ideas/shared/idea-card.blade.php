@@ -14,7 +14,8 @@
             <div class="align-self-start">
                 <form method="POST" action="{{route('ideas.destroy', $idea->id)}}">
                     @csrf
-                    @if (Auth::user()->id == $idea->user_id and Route::is('ideas.show'))
+                    @if (Auth::check() && (Auth::user()->id == $idea->user_id || Auth::user()->is_admin) &&
+                    Route::is('ideas.show'))
                     <a class="mx-2" href="{{route('ideas.edit', $idea->id)}}">Edit</a>
                     @endif
 

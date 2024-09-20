@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Idea;
 use App\Models\User;
+use App\Policies\IdeaPermissions;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
@@ -29,16 +30,6 @@ class AppServiceProvider extends ServiceProvider
             return (bool) $user->is_admin;
         });
 
-        //Permission
-
-        Gate::define('idea.delete', function (User $user, Idea $idea): bool {
-
-            return $user->id === $idea->user_id || (bool) $user->is_admin;
-        });
-
-        Gate::define('idea.edit', function (User $user, Idea $idea): bool {
-
-            return $user->id === $idea->user_id || (bool) $user->is_admin;
-        });
+        // Gate::policy(Idea::class, IdeaPermissions::class);
     }
 }

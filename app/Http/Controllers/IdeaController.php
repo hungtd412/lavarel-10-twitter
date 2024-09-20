@@ -10,15 +10,9 @@ use Illuminate\Support\Facades\Gate;
 
 class IdeaController extends Controller
 {
-    public function canEdit(Idea $idea)
-    {
-        return Auth::user()->id == $idea->user_id;
-    }
-
     public function show(Idea $idea)
     {
-        $editable = $this->canEdit($idea);
-        return view("ideas.show", compact("idea", 'editable'));
+        return view("ideas.show", compact("idea"));
         //compact('idea'): lavarel will find variable named idea and return an copy object os that for us
         //instead of return view("ideas.show", 'idea' => $idea);
     }
@@ -44,7 +38,7 @@ class IdeaController extends Controller
     */
     public function destroy(Idea $idea)
     {
-        Gate::authorize('idea.delete', $idea);
+        Gate::authorize('delete', $idea);
         try {
             $idea->delete();
         } catch (ModelNotFoundException $e) {
@@ -55,7 +49,7 @@ class IdeaController extends Controller
 
     public function edit(Idea $idea)
     {
-        Gate::authorize('idea.edit', $idea);
+        Gate::authorize('update', $idea);
 
         $editing = true;
 
@@ -64,6 +58,8 @@ class IdeaController extends Controller
 
     public function update(Idea $idea)
     {
+        Gate::authorize('update', $idea);
+
         $validated = request()->validate([
             'content' => 'required|min:3|max:240'
         ]);
