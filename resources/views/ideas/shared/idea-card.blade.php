@@ -14,8 +14,7 @@
             <div class="align-self-start">
                 <form method="POST" action="{{route('ideas.destroy', $idea->id)}}">
                     @csrf
-                    {{-- @if ($editable ?? false or $idea->canEdit ?? false) --}}
-                    @if (Route::is('ideas.show'))
+                    @if (Auth::user()->id == $idea->user_id and Route::is('ideas.show'))
                     <a class="mx-2" href="{{route('ideas.edit', $idea->id)}}">Edit</a>
                     @endif
 

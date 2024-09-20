@@ -6,6 +6,7 @@ use App\Models\Idea;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class IdeaController extends Controller
 {
@@ -43,10 +44,7 @@ class IdeaController extends Controller
     */
     public function destroy(Idea $idea)
     {
-        if (Auth::user()->id !== $idea->user_id) {
-            abort(404);
-        }
-
+        Gate::authorize('idea.delete', $idea);
         try {
             $idea->delete();
         } catch (ModelNotFoundException $e) {
@@ -57,9 +55,7 @@ class IdeaController extends Controller
 
     public function edit(Idea $idea)
     {
-        if (Auth::user()->id !== $idea->user_id) {
-            abort(404);
-        }
+        Gate::authorize('idea.edit', $idea);
 
         $editing = true;
 
@@ -68,10 +64,6 @@ class IdeaController extends Controller
 
     public function update(Idea $idea)
     {
-        if (Auth::user()->id !== $idea->user_id) {
-            abort(404);
-        }
-
         $validated = request()->validate([
             'content' => 'required|min:3|max:240'
         ]);
