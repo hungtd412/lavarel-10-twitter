@@ -23,16 +23,23 @@ class DashboardController extends Controller
     // }
     public function index()
     {
-        $ideas = Idea::orderBy('created_at', 'desc');
+        // $ideas = Idea::orderBy('created_at', 'desc');
+        // if (request()->has('search')) {
+        //     $ideas = $ideas->search(request()->get('search', ''));
+        //     //request()->get('search', '') means that, if not having 'search', using '' as default
+        // }
 
-
-        if (request()->has('search')) {
-            $ideas = $ideas->where('content', 'like', '%' . request()->get('search', '') . '%');
-            //request()->get('search', '') means that, if not having 'search', using '' as default
-        }
+        $ideas = Idea::when(
+            request()->has('search'),
+            function ($query) {
+                $query->search(request()->get('search', ''));
+            }
+        )
+            ->orderBy('created_at', 'desc')
+            ->paginate(4);
 
         //must put this line above "$ideas = $this->addCanEditField($ideas);", because $ideas was converted into collection after addCanEditField()
-        $ideas = $ideas->paginate(4);
+        // $ideas = $ideas->paginate(4);
 
         // $ideas = $this->addCanEditField($ideas);
 
