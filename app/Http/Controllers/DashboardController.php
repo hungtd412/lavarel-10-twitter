@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Idea;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,21 +23,9 @@ class DashboardController extends Controller
     // }
     public function index()
     {
-        // $idea = new Idea([
-        //     "content" => "hello youtube",
-        //     "likes" => 172,
-        // ]);
-        // $idea->save();
-
         $ideas = Idea::orderBy('created_at', 'desc');
 
 
-        /*
-        *Return all customers from a city that contains the letter 'L':
-        *
-        *SELECT * FROM Customers
-        *WHERE city LIKE '%L%';
-        */
         if (request()->has('search')) {
             $ideas = $ideas->where('content', 'like', '%' . request()->get('search', '') . '%');
             //request()->get('search', '') means that, if not having 'search', using '' as default
@@ -48,7 +37,7 @@ class DashboardController extends Controller
         // $ideas = $this->addCanEditField($ideas);
 
         return view('dashboard', [
-            'ideas' => $ideas
+            'ideas' => $ideas,
         ]);
     }
 }
