@@ -23,6 +23,5 @@ class CommentController extends Controller
             return redirect()->route('admin.comments.index')->with('error', $e->getMessage());
         }
         return redirect()->route("admin.comments.index")->with("success", "Comment deleted successfully!");
-        // return view('admin.comments.index', compact('comments'));
     }
 }

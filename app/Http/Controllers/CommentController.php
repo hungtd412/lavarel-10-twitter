@@ -15,7 +15,7 @@ class CommentController extends Controller
         $validated = $request->validated();
 
         $validated['user_id'] = auth()->id();
-        $validated['idea_id'] = $idea->id();
+        $validated['idea_id'] = $idea->id;
 
         Comment::create($validated);
 
