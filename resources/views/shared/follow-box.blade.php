@@ -17,14 +17,14 @@
             @if (Auth::check() && Auth::user()->follow($user))
             <form method="POST" action="{{ route('users.unfollow', $user->id) }}">
                 @csrf
-                <button type="submit" class="btn btn-primary-soft rounded-circle icon-md ms-auto"><i
+                <button type="submit" class="btn btn-primary-soft btn-danger icon-md ms-auto btn-sm"><i
                         class="fa-solid fa-xmark">
                     </i></button>
             </form>
             @else
             <form method="POST" action="{{ route('users.follow', $user->id) }}">
                 @csrf
-                <button type="submit" class="btn btn-primary btn-sm"><i class="fa-solid fa-plus">
+                <button type="submit" class="btn btn-primary btn-sm icon-md"><i class="fa-solid fa-plus">
                     </i></button>
             </form>
             @endif
